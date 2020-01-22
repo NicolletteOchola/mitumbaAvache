@@ -50,3 +50,28 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=login_form, quotes=quotes)
+
+
+
+
+@users.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))
+
+
+def save_picture(form_picture):
+    randome_hex = secrets.token_hex(8)
+    f_name, f_ext = os.path.splitext(form_picture.filename)
+    picture_name = randome_hex + f_ext
+    picture_path = os.path.join(
+        current_app.root_path, 'static/profile_pics', picture_name)
+
+    output_size = (125, 125)
+    final_image = Image.open(form_picture)
+    final_image.thumbnail(output_size)
+
+    final_image.save(picture_path)
+    image_files = url_for(
+        'static', filename='profile_pics/' + current_user.image)
+    return picture_name
