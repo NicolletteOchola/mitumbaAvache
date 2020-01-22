@@ -17,6 +17,12 @@
 
 ## TECHNOLOGY USED
 
+- css and bootstrap
+- Html
+- Flask 
+- Database
+- python
+
 ## SETUP REQUIREMENTS
 
 ## TESTING 
