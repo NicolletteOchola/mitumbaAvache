@@ -1,5 +1,7 @@
 ## MITUMBA-AVACHE
 
+## PROJECT DESCRIPTION
+
 - 
      Mitumba-Avache, is an Application aimed at benefitting both the sellers and buyers of second hand clothes.
      Sellers are able to create their profiles and post their relevant details in their profile pages.
