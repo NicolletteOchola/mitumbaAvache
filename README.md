@@ -35,7 +35,17 @@
 
 ## CONTACTS 
 
+- ongatikebaso@gmail.com
+
+- munenexv@gmail.com 
+
+- ccayreen24@gmail.com
+
+- nicoleochola@gmail.com
+
 ## KNOWN BUGS
+
+- No known bugs, if you encounter any, feel free to contact us.
 
 ## LECENSE
 
