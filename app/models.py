@@ -75,3 +75,14 @@ class Post(db.Model):
     
     def __repr__(self):
         return f"Comment('{self.comment}', '{self.posted_date}')"
+
+  class Quote:
+    '''
+    Quote class to define Quote Objects
+    '''
+
+    def __init__(self, id, author, quote, permalink):
+        self.id = id
+        self.author = author
+        self.quote = quote
+        self.permalink = permalink
