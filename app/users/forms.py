@@ -30,3 +30,15 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+class UpdateAccountForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    fullname = StringField('Full Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    bio = TextAreaField('Tell us about you.')
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    facebook = StringField('Facebook URL', validators=[Optional(), URL()])
+    twitter = StringField('Twitter URL', validators=[Optional(), URL()])
+    github = StringField('Github URL', validators=[Optional(), URL()])
+    linkedin = StringField('LinkedIn URL', validators=[Optional(), URL()])
+    submit = SubmitField('Update')
