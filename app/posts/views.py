@@ -49,3 +49,11 @@ def new_post():
     
     myposts = Post.query.order_by(Post.posted_date.desc())
     return render_template('new-post.html', title='New Post', form=form, legend='New Post', myposts=myposts, quotes=quotes)
+
+
+@posts.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    comments = Comment.query.filter_by(post_id = post_id).all()
+    myposts = Post.query.order_by(Post.posted_date.desc())
+    return render_template('post.html', title=post.title, post=post, comments = comments, myposts=myposts, quotes=quotes)
