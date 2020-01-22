@@ -19,7 +19,7 @@
 | Behaviour     |  Input          | Output        |
 | :-----------: |:---------------:| :-----------: |
 |Register new user|Username,email,password|Login form|
-|Login user with the registered credentials|email and password|Home page of the app with latest pitches displayed|
+|Login user with the registered credentials|email and password|Home page of the app with latest designs of clothes|
 |Create new post|Title, the pitch and the category of the pitch|Succes message for blog post creation and blog post added to latest pitches|
 |Add new comment|The comment(click on submit button)|Success message and the comment on pitch|
 
