@@ -113,3 +113,12 @@ def account():
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image)
     return render_template('account.html', title='Account', posts=posts, user=user, image_file=image_file, form=form, myposts=myposts, quotes=quotes)
+
+@users.route("/user/<string:username>")
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user).order_by(
+        Post.posted_date.desc()).paginate(page=page, per_page=7)
+    myposts = Post.query.order_by(Post.posted_date.desc())
+    return render_template('userposts.html', posts=posts, user=user, myposts=myposts, quotes=quotes)
