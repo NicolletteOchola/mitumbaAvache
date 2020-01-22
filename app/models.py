@@ -41,3 +41,18 @@ class User(db.Model, UserMixin):
     
     def __repr__(self):
         return f'User {self.username}'
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    posted_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    image = db.Column(db.String(225), default='default.jpg')
+    category = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    comments = db.relationship('Comment', backref='post', lazy=True)
+
+    
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.posted_date}', '{self.category}')"
+    
