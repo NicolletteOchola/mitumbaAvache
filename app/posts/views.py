@@ -148,3 +148,12 @@ def comment(coment_id):
     db.session.commit()
     flash('The comment has been deleted!', 'success')
     return redirect(url_for('posts.post', comment_id=comment.id))
+
+
+@posts.route('/quote')
+def getquotes():
+
+    quotes = get_quote()
+    # title = name
+    
+    return render_template('layout.html', quotes=quotes)
