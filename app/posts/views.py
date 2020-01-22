@@ -84,3 +84,22 @@ def update_post(post_id):
         form.category.data = post.category
     myposts = Post.query.order_by(Post.posted_date.desc())
     return render_template('new-post.html', title='Update Post', form=form, legend='Update Post', quotes=quotes, myposts=myposts)
+
+
+@posts.route("/post/<int:post_id>/delete", methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('main.home'))
+
+@posts.route("/post/<string:category>")
+def category_post(category):
+    post = Post.query.filter_by(category=category).all()
+    print("..............", post)
+    myposts = Post.query.order_by(Post.posted_date.desc())
+    return render_template('category.html', post=post, category=category, myposts=myposts, quotes=quotes) 
