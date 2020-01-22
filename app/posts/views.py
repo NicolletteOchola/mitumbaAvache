@@ -10,3 +10,7 @@ from app.posts.forms import PostForm, CommentForm
 from app.request import get_quote
 from flask_simplemde import SimpleMDE
 from ..main import views
+
+
+posts = Blueprint('posts', __name__)
+quotes = get_quote()
