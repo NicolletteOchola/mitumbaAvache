@@ -25,7 +25,13 @@
 
 ## SETUP REQUIREMENTS
 
+- Python 3.6
+- Internet Connection
+- git clone the app  
+
 ## TESTING 
+
+- To run the tests on the application run `$ test_user.py` and `test_comment.py` 
 
 ## CONTACTS 
 
