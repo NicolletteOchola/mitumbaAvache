@@ -14,6 +14,13 @@
 
 
 ## BDD 
+| Behaviour     |  Input          | Output        |
+| :-----------: |:---------------:| :-----------: |
+|Register new user|Username,email,password|Login form|
+|Login user with the registered credentials|email and password|Home page of the app with latest pitches displayed|
+|Create new post|Title, the pitch and the category of the pitch|Succes message for blog post creation and blog post added to latest pitches|
+|Add new comment|The comment(click on submit button)|Success message and the comment on pitch|
+
 
 ## TECHNOLOGY USED
 
@@ -27,7 +34,12 @@
 
 - Python 3.6
 - Internet Connection
-- git clone the app  
+- Run the following commands on your terminal:
+`$ git clone https://github.com/NicolletteOchola/mitumbaAvache.git`
+- Navigate to the folder
+ `$ cd <folder/file name>`
+- To run the application;
+ `$ python3.6 mitumbaAvache.py`
 
 ## TESTING 
 
