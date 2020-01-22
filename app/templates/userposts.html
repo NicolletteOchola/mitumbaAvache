@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content%} 
+    <h2 class="mb-4 mt-4 pt-2"> {{ posts.total }} Posts by {{user.fullname}} </h2>
+
+    {% for post in posts.items %}
+
+     <!-- Section: Blog v.3 -->
+<section class="my-5">
+
+    <div class="row">
+  
+      <!-- Grid column -->
+      <div class="col-lg-5 col-xl-4">
+  
+        <!-- Featured image -->
+        <div class="view overlay rounded z-depth-2 mb-lg-0 mb-4">
+            {% if post.image %}
+            <img class="img-fluid" src="{{ url_for('static', filename='featured_images/')}}{{post.image}}" alt="{{post.title}} image">
+            {% else %}
+            <img class="img-fluid" src="{{ url_for('static', filename='featured_images/')}}default.jpg" alt="{{post.title}} image">
+            {% endif %}
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+  
+      </div>
+      
