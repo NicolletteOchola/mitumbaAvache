@@ -35,3 +35,18 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         title = "New Account"
     return render_template('register.html', title='Register', form=form, quotes=quotes)
+
+
+@users.route("/login", methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    # import pdb; pdb.set_trace()
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(email=login_form.email.data).first()
+        # import pdb; pdb.set_trace()
+        if user is not None and user.verify_password(login_form.password.data):
+            login_user(user, login_form.remember.data)
+            return redirect(request.args.get('next') or url_for('main.home'))
+        else:
+            flash('Login Unsuccessful. Please check email and password', 'danger')
+    return render_template('login.html', title='Login', form=login_form, quotes=quotes)
