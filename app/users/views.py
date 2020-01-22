@@ -15,3 +15,23 @@ from app.request import get_quote
 
 users = Blueprint('users', __name__)
 quotes = get_quote()
+
+
+@users.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data, password=form.password.data)
+        user.save_user()
+        try:
+            msg = Message('Hello! Welcome to PITCH. We are glad you joined us.', sender=(
+                'nicoleochola@gmail.com'))
+            msg.add_recipient(user.email)
+            mail.send(msg)
+        except Exception as e:
+            print('failed')
+        return redirect(url_for('users.login'))
+        flash('Your account has been created! You are now able to log in', 'success')
+        title = "New Account"
+    return render_template('register.html', title='Register', form=form, quotes=quotes)
