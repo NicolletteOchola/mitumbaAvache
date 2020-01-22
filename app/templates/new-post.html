@@ -34,7 +34,35 @@
                     {% endif %}
                     
                 </div>
-                
+                <div class="form-group">
+                    <div>
+                        <p>Please choose from the categories below</p>
+                        <ul>
+                            <li>Childrens Items</li>
+                            <li>Ladies Items</li>
+                            <li>Mens Items</li>
+                            <li>House hold Items</li>
+                            <li>Shoes</li>
+                        </ul>
+                    </div>
+                    {{ form.category.label(class="form-control-label") }}
+                    {{ form.category(class="form-control form-control-lg") }}
+            </div>
+
+
+
+            <div class="form-group">
+                {{ form.image.label() }}
+                {{ form.image(class="form-control-file") }}
+                {% if form.image.errors %}
+                    {% for error in form.image.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </fieldset>
+
+
 
 
 {% endblock content %}
