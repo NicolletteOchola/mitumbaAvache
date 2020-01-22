@@ -57,3 +57,30 @@ def post(post_id):
     comments = Comment.query.filter_by(post_id = post_id).all()
     myposts = Post.query.order_by(Post.posted_date.desc())
     return render_template('post.html', title=post.title, post=post, comments = comments, myposts=myposts, quotes=quotes)
+
+@posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        if form.image.data:
+            picture_file = save_picture(form.image.data)
+            final_pic = picture_file
+             
+             
+        post.title = form.title.data
+        post.content = form.content.data
+        post.category = form.category.data
+        post.image = final_pic
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('posts.post', post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+        form.category.data = post.category
+    myposts = Post.query.order_by(Post.posted_date.desc())
+    return render_template('new-post.html', title='Update Post', form=form, legend='Update Post', quotes=quotes, myposts=myposts)
