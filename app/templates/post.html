@@ -9,3 +9,18 @@
                 <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.fullname }}</a>
                 <small class="text-muted mr-2">{{ post.posted_date.strftime('%Y-%m-%d') }}</small>
                 <small>Posted in: <a class="mr-2" href="{{ url_for('posts.category_post', category=post.category) }}">{{ post.category }}</a></small>
+                {% if post.author == current_user%}
+                <div>
+                    <a class="btn btn-default btn-sm mt-2 mb-2" href="{{ url_for('posts.update_post', post_id=post.id) }}">Edit</a>
+                    <button type="button" class="btn btn-danger btn-sm m-1 mb-1"  data-toggle="modal" data-target="#deleteModal">Delete</button>
+                </div>
+
+                {% endif %}
+              </div>
+              <h2 class="article-title mt-2 pb-2 pt-2 font-weight-bold">{{ post.title }}</h2>
+
+              {% if post.image %}
+                <img class="img-fluid" src="{{ url_for('static', filename='featured_images/')}}{{post.image}}" alt="{{post.title}} image">
+                {% else %}
+                <img class="img-fluid" src="{{ url_for('static', filename='featured_images/')}}default.jpg" alt="{{post.title}} image">
+              {% endif %}
