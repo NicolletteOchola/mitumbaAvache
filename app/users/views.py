@@ -75,3 +75,41 @@ def save_picture(form_picture):
     image_files = url_for(
         'static', filename='profile_pics/' + current_user.image)
     return picture_name
+
+@users.route("/account",  methods=['GET', 'POST'])
+@login_required
+def account():
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image = picture_file
+
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        current_user.fullname = form.fullname.data
+        current_user.bio = form.bio.data
+        current_user.facebook = form.facebook.data
+        current_user.twitter = form.twitter.data
+        current_user.github = form.github.data
+        current_user.linkedin = form.linkedin.data
+        db.session.commit()
+
+        flash('Your account has been updated.', 'success')
+        return redirect(url_for('users.account'))
+
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        
+       
+
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=current_user.username).first_or_404()
+    posts = Post.query.filter_by(author=user).order_by(
+        Post.posted_date.desc()).all()
+    print('--------', posts)
+    myposts = Post.query.order_by(Post.posted_date.desc())
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image)
+    return render_template('account.html', title='Account', posts=posts, user=user, image_file=image_file, form=form, myposts=myposts, quotes=quotes)
