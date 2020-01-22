@@ -29,3 +29,23 @@ def save_picture(form_image):
     final_image.save(picture_path)
     
     return picture_name
+
+@posts.route("/post/new", methods=['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    
+    if form.validate_on_submit():
+        pic =None
+        if form.image.data:
+            picture_file = save_picture(form.image.data)
+            final_pic = picture_file
+            pic= final_pic
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, category=form.category.data, image=pic)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been published!', 'success')
+        return redirect(url_for('main.home'))
+    
+    myposts = Post.query.order_by(Post.posted_date.desc())
+    return render_template('new-post.html', title='New Post', form=form, legend='New Post', myposts=myposts, quotes=quotes)
