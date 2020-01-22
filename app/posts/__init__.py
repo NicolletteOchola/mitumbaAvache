@@ -13,3 +13,8 @@ class PostForm(FlaskForm):
     image = FileField('Featured Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     category = StringField('Category', validators=[DataRequired()])
     submit = SubmitField('Publish')
+    
+class CommentForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    comment = TextAreaField('Comment', validators=[DataRequired(), Length(min=10)])
+    submit = SubmitField('Submit')    
