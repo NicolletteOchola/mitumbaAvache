@@ -63,5 +63,5 @@
 
 ## LECENSE
 
-- MIT Licence (c) MitumbaAvache 2020
+- MIT Licence (c) MitumbaAvache kenya 2020
 
