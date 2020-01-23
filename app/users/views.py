@@ -9,12 +9,10 @@ import secrets
 from PIL import Image
 from flask_mail import Message
 from ..email import mail_message
-from app.request import get_quote
 
 # from app import mail
 
 users = Blueprint('users', __name__)
-quotes = get_quote()
 
 
 @users.route("/register", methods=['GET', 'POST'])
@@ -34,7 +32,7 @@ def register():
         return redirect(url_for('users.login'))
         flash('Your account has been created! You are now able to log in', 'success')
         title = "New Account"
-    return render_template('register.html', title='Register', form=form, quotes=quotes)
+    return render_template('register.html', title='Register', form=form)
 
 
 @users.route("/login", methods=['GET', 'POST'])
@@ -49,7 +47,7 @@ def login():
             return redirect(request.args.get('next') or url_for('main.home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=login_form, quotes=quotes)
+    return render_template('login.html', title='Login', form=login_form)
 
 
 
@@ -112,7 +110,7 @@ def account():
     myposts = Post.query.order_by(Post.posted_date.desc())
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image)
-    return render_template('account.html', title='Account', posts=posts, user=user, image_file=image_file, form=form, myposts=myposts, quotes=quotes)
+    return render_template('account.html', title='Account', posts=posts, user=user, image_file=image_file, form=form, myposts=myposts)
 
 @users.route("/user/<string:username>")
 def user_posts(username):
@@ -121,4 +119,4 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user).order_by(
         Post.posted_date.desc()).paginate(page=page, per_page=7)
     myposts = Post.query.order_by(Post.posted_date.desc())
-    return render_template('userposts.html', posts=posts, user=user, myposts=myposts, quotes=quotes)
+    return render_template('userposts.html', posts=posts, user=user, myposts=myposts)

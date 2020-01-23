@@ -4,16 +4,13 @@ from flask_login import current_user, login_required, logout_user
 from app import db, bcrypt
 import secrets
 from PIL import Image
-from app.request import get_quote
 from app.models import Post, User, Comment
 from app.posts.forms import PostForm, CommentForm
-from app.request import get_quote
 from flask_simplemde import SimpleMDE
 from ..main import views
 
 
 posts = Blueprint('posts', __name__)
-quotes = get_quote()
 
 
 def save_picture(form_image):
@@ -48,7 +45,7 @@ def new_post():
         return redirect(url_for('main.home'))
     
     myposts = Post.query.order_by(Post.posted_date.desc())
-    return render_template('new-post.html', title='New Post', form=form, legend='New Post', myposts=myposts, quotes=quotes)
+    return render_template('new-post.html', title='New Post', form=form, legend='New Post', myposts=myposts)
 
 
 @posts.route("/post/<int:post_id>")
@@ -56,7 +53,7 @@ def post(post_id):
     post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter_by(post_id = post_id).all()
     myposts = Post.query.order_by(Post.posted_date.desc())
-    return render_template('post.html', title=post.title, post=post, comments = comments, myposts=myposts, quotes=quotes)
+    return render_template('post.html', title=post.title, post=post, comments = comments, myposts=myposts)
 
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
@@ -83,7 +80,7 @@ def update_post(post_id):
         form.content.data = post.content
         form.category.data = post.category
     myposts = Post.query.order_by(Post.posted_date.desc())
-    return render_template('new-post.html', title='Update Post', form=form, legend='Update Post', quotes=quotes, myposts=myposts)
+    return render_template('new-post.html', title='Update Post', form=form, legend='Update Post', myposts=myposts)
 
 
 @posts.route("/post/<int:post_id>/delete", methods=['POST'])
@@ -102,7 +99,7 @@ def category_post(category):
     post = Post.query.filter_by(category=category).all()
     print("..............", post)
     myposts = Post.query.order_by(Post.posted_date.desc())
-    return render_template('category.html', post=post, category=category, myposts=myposts, quotes=quotes) 
+    return render_template('category.html', post=post, category=category, myposts=myposts) 
 
 @posts.route("/post/<int:post_id>/comment", methods=['GET', 'POST'])
 @login_required
@@ -118,8 +115,7 @@ def new_comment(post_id):
         flash('You comment has been created!', 'success')
         return redirect(url_for('posts.post', post_id=post.id))
     myposts = Post.query.order_by(Post.posted_date.desc())
-    return render_template('new-comment.html', title='New Comment', form=form, legend='New Comment', myposts=myposts, quotes=quotes)
-
+    return render_template('new-comment.html', title='New Comment', form=form, legend='New Comment', myposts=myposts)
 
 
 
@@ -150,10 +146,3 @@ def comment(coment_id):
     return redirect(url_for('posts.post', comment_id=comment.id))
 
 
-@posts.route('/quote')
-def getquotes():
-
-    quotes = get_quote()
-    # title = name
-    
-    return render_template('layout.html', quotes=quotes)

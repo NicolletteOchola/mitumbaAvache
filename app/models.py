@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -27,7 +28,7 @@ class User(db.Model, UserMixin):
         db.session.delete(self)
         db.session.commit()
 
-     @property
+    @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
 
@@ -55,16 +56,18 @@ class Post(db.Model):
     
     def __repr__(self):
         return f"Post('{self.title}', '{self.posted_date}', '{self.category}')"
+    
 
-  class Comment(db.Model):
+class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(255))
     comment = db.Column(db.Text, nullable=False)
     posted_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id')) 
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
-     def save_comment(self):
+    
+    def save_comment(self):
         db.session.add(self)
         db.session.commit()
 
@@ -75,14 +78,15 @@ class Post(db.Model):
     
     def __repr__(self):
         return f"Comment('{self.comment}', '{self.posted_date}')"
+    
+    
+# class Quote:
+#     '''
+#     Quote class to define Quote Objects
+#     '''
 
-  class Quote:
-    '''
-    Quote class to define Quote Objects
-    '''
-
-    def __init__(self, id, author, quote, permalink):
-        self.id = id
-        self.author = author
-        self.quote = quote
-        self.permalink = permalink
+#     def __init__(self, id, author, quote, permalink):
+#         self.id = id
+#         self.author = author
+#         self.quote = quote
+#         self.permalink = permalink

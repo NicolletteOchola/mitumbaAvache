@@ -6,7 +6,7 @@ load_dotenv()
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://nicole:   @localhost/mtumbaAvache'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://nicole:   @localhost/mtumba2'
     
     
     #  email configurations
@@ -28,7 +28,7 @@ class ProdConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://nicole:   @localhost/mtumbaAvache'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://nicole:   @localhost/mtumba2'
 
 
 class DevConfig(Config):
